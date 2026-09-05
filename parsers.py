@@ -1,15 +1,17 @@
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from schemas import EventSchema, SocietySchema
 from functools import lru_cache
 import os
 
-
 def get_llm():
-    if not os.getenv("OPENAI_API_KEY"):
-        raise RuntimeError("OPENAI_API_KEY is not set. Add it to your environment or .env file.")
-    return ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    if not os.getenv("GOOGLE_API_KEY"):
+        raise ValueError("GOOGLE_API_KEY is not set")
+    return ChatGoogleGenerativeAI(
+        model="gemini-3.8-flash",
+        temperature=0
+    )
 
 
 # ── Event Parser ───────────────────────────────────────────────────────────
